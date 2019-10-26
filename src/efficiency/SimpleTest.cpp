@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <cstring>
 #include <memcached.h>
 #include "tracer.h"
 

@@ -3,6 +3,7 @@
 //
 
 #include <gtest/gtest.h>
+#include <cstring>
 #include <memcached.h>
 
 memcached_server_st *servers = memcached_servers_parse("localhost");
