@@ -49,7 +49,8 @@ foreach (sourcefile ${MC_GTESTS_EXES})
 endforeach (sourcefile ${MC_GTESTS_EXES})
 
 set(MC_TEST
-        ./src/efficiency/SimpleTest.cpp)
+        ./src/efficiency/SimpleTest.cpp
+        ./src/efficiency/MultiTest.cpp)
 
 set(MC_TESTS_EXES ${MC_TEST})
 foreach (sourcefile ${MC_TESTS_EXES})
