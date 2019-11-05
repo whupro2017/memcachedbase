@@ -25,7 +25,8 @@ void *measureWorker(void *args) {
         std::sprintf(key, "%d", i);
         std::memcpy(value, "hello", 5);
         std::sprintf(value + 5, "%d", i);
-        memcached_add(memc, key, std::strlen(key), value, std::strlen(value), 0, 0);
+        memcached_return_t ret = memcached_set(memc, key, std::strlen(key), value, std::strlen(value), 0, 0);
+        if (tid == 0 && (i % 100000 == 0)) cout << "\t" << tid << " " << i << " " << ret << endl;
     }
 }
 
