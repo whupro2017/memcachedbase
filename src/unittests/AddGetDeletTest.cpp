@@ -20,10 +20,10 @@ void TearDown() {
 }
 
 TEST(LibmemcachedTest, AddGet) {
-    memcached_add(memc, "hello", 5, "hello world", 11, 0, 0);
+    memcached_return_t ret = memcached_set(memc, "hello", 5, "hello world", 11, 0, 0);
+    ASSERT_EQ(ret, memcached_return_t::MEMCACHED_SUCCESS);
     size_t value_length = 64;
     uint32_t flag = 0;
-    memcached_return_t ret;
     char *value = memcached_get(memc, "hello", 5, &value_length, &flag, &ret);
     ASSERT_STRCASEEQ("hello world", value);
     TearDown();

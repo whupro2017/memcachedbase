@@ -8,7 +8,7 @@
 #include <memcached.h>
 #include "tracer.h"
 
-uint64_t total_count = (1 << 28);
+uint64_t total_count = (1 << 24);
 
 int thread_number = 2;
 
@@ -17,15 +17,15 @@ memcached_st *memc = memcached_create(NULL);
 
 void *measureWorker(void *args) {
     int tid = *(int *) args;
-    char key[1024];
-    char value[1024];
-    std::memset(key, 0, 1024);
-    std::memset(value, 0, 1024);
-    std::memcpy(value, "hello", 5);
+    char key[64];
+    char value[64];
     for (int i = tid; i < total_count; i += thread_number) {
+        std::memset(key, 0, 64);
+        std::memset(value, 0, 64);
         std::sprintf(key, "%d", i);
+        std::memcpy(value, "hello", 5);
         std::sprintf(value + 5, "%d", i);
-        memcached_add(memc, key, sizeof(key), value, sizeof(value), 0, 0);
+        memcached_add(memc, key, std::strlen(key), value, std::strlen(value), 0, 0);
     }
 }
 
@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
         thread_number = std::atoi(argv[2]);
     }
     memcached_server_push(memc, servers);
-    memcached_server_list_free(servers);
+    //memcached_server_list_free(servers);
     memcached_behavior_set(memc, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, (uint64_t) thread_number);
     Tracer tracer;
     tracer.startTime();
