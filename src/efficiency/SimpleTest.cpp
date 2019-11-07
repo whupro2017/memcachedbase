@@ -11,7 +11,7 @@ constexpr size_t total_count = 1000000;
 
 int main(int argc, char **argv) {
     memcached_server_st *servers = memcached_servers_parse("localhost");
-    memcached_st *memc = memcached_create(NULL);
+    memcached_st * memc = memcached_create(NULL);
     memcached_server_push(memc, servers);
     //memcached_server_list_free(servers);
     memcached_behavior_set(memc, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, (uint64_t) 0);

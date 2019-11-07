@@ -3,7 +3,6 @@
 //
 
 #include <gtest/gtest.h>
-#include <cstring>
 #include <memcached.h>
 
 memcached_server_st *servers = memcached_servers_parse("localhost");
@@ -20,7 +19,7 @@ void TearDown() {
 }
 
 TEST(LibmemcachedTest, AddGet) {
-    memcached_return_t ret = memcached_set(memc, "hello", 5, "hello world", 11, 0, 0);
+    memcached_return_t ret = memcached_add(memc, "hello", 5, "hello world", 11, 0, 0);
     ASSERT_EQ(ret, memcached_return_t::MEMCACHED_SUCCESS);
     size_t value_length = 64;
     uint32_t flag = 0;
@@ -32,5 +31,7 @@ TEST(LibmemcachedTest, AddGet) {
 int main(int argc, char **argv) {
     SetUp();
     ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    int ret = RUN_ALL_TESTS();
+    TearDown();
+    return ret;
 }

@@ -27,6 +27,8 @@ if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     include_directories(/usr/local/Cellar/libmemcached/1.0.18_2/include/)
     include_directories(/usr/local/Cellar/libmemcached/1.0.18_2/include/libmemcached)
     link_directories(/usr/local/Cellar/libmemcached/1.0.18_2/lib)
+    include_directories(/usr/local/include)
+    include_directories(/usr/local/include/libmemcached/)
 else ()
     include_directories(/usr/include)
     include_directories(/usr/include/libmemcached/)
@@ -50,7 +52,8 @@ endforeach (sourcefile ${MC_GTESTS_EXES})
 
 set(MC_TEST
         ./src/efficiency/SimpleTest.cpp
-        ./src/efficiency/MultiTest.cpp)
+        ./src/efficiency/MultiTest.cpp
+        ./src/efficiency/CASSingleTest.cpp)
 
 set(MC_TESTS_EXES ${MC_TEST})
 foreach (sourcefile ${MC_TESTS_EXES})
