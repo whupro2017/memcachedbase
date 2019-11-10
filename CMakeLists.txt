@@ -15,6 +15,7 @@ if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
 else ()
     include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/third-party/gtest-1.7.0/fused-src)
     include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/third-party/gtest-1.7.0/fused-src/gtest)
+    include_directories(/usr/include/libmemcached)
     add_subdirectory(third-party/gtest-1.7.0/fused-src/gtest)
     enable_testing()
 endif ()
@@ -47,7 +48,7 @@ foreach (sourcefile ${MC_GTESTS_EXES})
             EXCLUDE_FROM_DEFAULT_BUILD_RELWITHDEBINFO 1
             OUTPUT_NAME ${exename}${ARTIFACT_SUFFIX}
             )
-    target_link_libraries(${CMAKE_PROJECT_NAME}_${exename}${ARTIFACT_SUFFIX} gtest ${PTHREAD} ${ATOMIC} ${LIBMC})
+    target_link_libraries(${CMAKE_PROJECT_NAME}_${exename}${ARTIFACT_SUFFIX} gtest ${ATOMIC} ${LIBMC} ${PTHREAD})
 endforeach (sourcefile ${MC_GTESTS_EXES})
 
 set(MC_TEST
@@ -65,5 +66,5 @@ foreach (sourcefile ${MC_TESTS_EXES})
             EXCLUDE_FROM_DEFAULT_BUILD_RELWITHDEBINFO 1
             OUTPUT_NAME ${exename}${ARTIFACT_SUFFIX}
             )
-    target_link_libraries(${CMAKE_PROJECT_NAME}_${exename}${ARTIFACT_SUFFIX} ${PTHREAD} ${ATOMIC} ${LIBMC})
+    target_link_libraries(${CMAKE_PROJECT_NAME}_${exename}${ARTIFACT_SUFFIX} ${ATOMIC} ${LIBMC} ${PTHREAD})
 endforeach (sourcefile ${MC_TESTS_EXES})
