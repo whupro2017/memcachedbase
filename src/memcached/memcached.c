@@ -8277,7 +8277,7 @@ static int _mc_meta_load_cb(const char *tag, void *ctx, void *data) {
     return reuse_mmap;
 }
 
-#if STANDALONE
+#ifdef STANDALONE
 int main(int argc, char **argv) {
     int c;
     bool lock_memory = false;

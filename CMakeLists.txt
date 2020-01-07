@@ -106,13 +106,24 @@ else ()
             src/memcached/thread.c
             #src/memcached/slab_automove_extstore.c
             src/memcached/util.c
-            src/memcached/memcached.c
             )
 
-    set(MEMC_TEST
-            test/unittests/MemcachedTest.cpp)
+    set(MEMC_MAIN
+            src/memcached/memcached.c)
 
-    set(MEMC_TEST_EXES ${MEMC_TEST})
+    if (STANDALONE)
+        set(CMAKE_CXX_FLAGS "-DSTANDALONE ${CMAKE_CXX_FLAGS}")
+        set(CMAKE_C_FLAGS "-DSTANDALONE ${CMAKE_C_FLAGS}")
+        set(MEMC_TEST_EXES ${MEMC_MAIN})
+    else ()
+        set(MEMC_SRC ${MEMC_SRC}
+                ${MEMC_MAIN})
+        message(${MEMC_SRC})
+        set(MEMC_TEST
+                test/unittests/MemcachedTest.cpp)
+        set(MEMC_TEST_EXES ${MEMC_TEST})
+    endif ()
+
     foreach (sourcefile ${MEMC_TEST_EXES})
         get_filename_component(exename ${sourcefile} NAME_WE)
         add_executable(${CMAKE_PROJECT_NAME}_${exename}${ARTIFACT_SUFFIX} ${sourcefile} ${MEMC_SRC})
