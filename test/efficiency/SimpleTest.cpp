@@ -29,7 +29,9 @@ int main(int argc, char **argv) {
         memcached_return_t ret = memcached_set(memc, key, std::strlen(key), value, std::strlen(value), 0, 0);
         if (ret == memcached_return_t::MEMCACHED_SUCCESS) success++;
     }
-    cout << tracer.getRunTime() << "\t" << success << " " << total_count;
+    cout << tracer.getRunTime() << "\t" << success << " " << total_count << endl;
     memcached_free(memc);
+    long*runtime = get_runtime();
+    cout << runtime[0] << "\t" << runtime[1] << " " << get_count() << endl;
     return 0;
 }

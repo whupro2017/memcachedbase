@@ -60,7 +60,7 @@ public:
     }
 
     double elapsedMilliseconds() {
-        std::chrono::time_point <std::chrono::system_clock> endTime;
+        std::chrono::time_point<std::chrono::system_clock> endTime;
 
         if (m_bRunning) {
             endTime = std::chrono::system_clock::now();
@@ -76,8 +76,8 @@ public:
     }
 
 private:
-    std::chrono::time_point <std::chrono::system_clock> m_StartTime;
-    std::chrono::time_point <std::chrono::system_clock> m_EndTime;
+    std::chrono::time_point<std::chrono::system_clock> m_StartTime;
+    std::chrono::time_point<std::chrono::system_clock> m_EndTime;
     bool m_bRunning = false;
 };
 
@@ -95,7 +95,7 @@ public:
             fclose(fp);
         } else {
             std::default_random_engine engine(static_cast<R>(chrono::steady_clock::now().time_since_epoch().count()));
-            std::uniform_int_distribution <size_t> dis(0, range + FUZZY_BOUND);
+            std::uniform_int_distribution<size_t> dis(0, range + FUZZY_BOUND);
             for (size_t i = 0; i < count; i++) {
                 array[i] = static_cast<R>(dis(engine));
             }
