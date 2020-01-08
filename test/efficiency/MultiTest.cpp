@@ -19,6 +19,10 @@ void *measureWorker(void *args) {
     int tid = *(int *) args;
     char key[64];
     char value[64];
+    Tracer tracer;
+    tracer.startTime();
+    memcached_behavior_set(memc, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, (uint64_t) tid);
+    std::cout << "\tTid" << tid << ": " << tracer.getRunTime() << std::endl;
     for (int i = tid; i < total_count; i += thread_number) {
         std::memset(key, 0, 64);
         std::memset(value, 0, 64);
@@ -37,7 +41,6 @@ int main(int argc, char **argv) {
     }
     memcached_server_push(memc, servers);
     //memcached_server_list_free(servers);
-    memcached_behavior_set(memc, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, (uint64_t) thread_number);
     Tracer tracer;
     tracer.startTime();
     pthread_t threads[thread_number];
