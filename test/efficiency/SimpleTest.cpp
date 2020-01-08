@@ -11,7 +11,7 @@ constexpr size_t total_count = 1000000;
 
 int main(int argc, char **argv) {
     memcached_server_st *servers = memcached_servers_parse("localhost");
-    memcached_st * memc = memcached_create(NULL);
+    memcached_st *memc = memcached_create(NULL);
     memcached_server_push(memc, servers);
     //memcached_server_list_free(servers);
     memcached_behavior_set(memc, MEMCACHED_BEHAVIOR_BINARY_PROTOCOL, (uint64_t) 0);
@@ -31,7 +31,9 @@ int main(int argc, char **argv) {
     }
     cout << tracer.getRunTime() << "\t" << success << " " << total_count << endl;
     memcached_free(memc);
-    long*runtime = get_runtime();
+#if MEMCACINFO
+    long *runtime = get_runtime();
     cout << runtime[0] << "\t" << runtime[1] << " " << get_count() << endl;
+#endif
     return 0;
 }

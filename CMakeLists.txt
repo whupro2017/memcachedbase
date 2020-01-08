@@ -8,7 +8,7 @@ include_directories(src/utils)
 
 set(CMAKE_CXX_STANDARD 14)
 
-#set(LIBMEMC true)
+set(LIBMEMC true)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     enable_testing()
